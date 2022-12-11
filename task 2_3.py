@@ -3,6 +3,8 @@
 # Первый ход определяется жеребьёвкой. За один ход можно забрать не более чем 28 конфет. 
 # Все конфеты оппонента достаются сделавшему последний ход. Сколько конфет нужно взять первому игроку, 
 # чтобы забрать все конфеты у своего конкурента?
+# a) Добавьте игру против бота
+# b) Подумайте как наделить бота ""интеллектом""
 
 
 from random import randint
@@ -16,8 +18,15 @@ def input_dat(name):
 def p_print(name, k, counter, value):
     print(f"Ходил {name}, он взял {k}, теперь у него {counter}. Осталось на столе {value} конфет.")
 
+def bot_calc(value): # Алгоритм, позволяющий боту выиграть, если бот ходит первым, и если человек допустит ошибку!
+    if value % 29 == 0:
+        k = randint(1, 28)
+    else:
+        k = value % 29
+    return k
+
 player1 = input("Введите имя первого игрока: ")
-player2 = input("Введите имя второго игрока: ")
+player2 = "Bot"
 value = int(input("Введите количество конфет на столе: "))
 flag = randint(0,1) # флаг очередности
 if flag:
@@ -36,7 +45,7 @@ while value > 28:
         flag = False
         p_print(player1, k, counter1, value)
     else:
-        k = input_dat(player2)
+        k = bot_calc(value)
         counter2 += k
         value -= k
         flag = True
